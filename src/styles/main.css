@@ -1120,14 +1120,30 @@ canvas,
 @media (max-width: 768px) {
   .site-footer {
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
     text-align: center;
-    padding: 12px 16px;
+    padding: 16px 16px calc(16px + env(safe-area-inset-bottom, 0px));
   }
+
   .site-footer nav {
     flex-wrap: wrap;
     justify-content: center;
-    gap: 12px;
+    gap: 8px 16px;
+  }
+
+  .site-footer nav a {
+    font-size: 12px;
+    padding: 4px 0;
+  }
+
+  .site-footer-brand {
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .site-footer-copy {
+    font-size: 10px;
+    opacity: 0.6;
   }
 }
 
@@ -10902,8 +10918,8 @@ a.prediction-link:hover {
   left: 0;
   top: 0;
   bottom: 0;
-  width: 280px;
-  max-width: 80vw;
+  width: 300px;
+  max-width: 85vw;
   background: var(--surface);
   border-right: 1px solid var(--border);
   z-index: 10000;
@@ -10912,6 +10928,7 @@ a.prediction-link:hover {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   display: none;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.3);
 }
 
 .mobile-menu.open {
@@ -10937,10 +10954,14 @@ a.prediction-link:hover {
   border: none;
   color: var(--text-dim);
   cursor: pointer;
-  padding: 4px;
+  padding: 8px;
   display: flex;
   align-items: center;
   -webkit-tap-highlight-color: transparent;
+  border-radius: 8px;
+  min-width: 40px;
+  min-height: 40px;
+  justify-content: center;
 }
 
 .mobile-menu-close:hover {
@@ -11157,17 +11178,39 @@ a.prediction-link:hover {
   }
 
   .header {
-    gap: 8px;
-    padding: 8px 12px;
+    gap: 6px;
+    padding: 6px 12px;
+    min-height: 44px;
   }
 
   .header-left {
     flex: 1;
     gap: 8px;
+    align-items: center;
+  }
+
+  .logo-mobile {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
   }
 
   .status-indicator span {
     display: none;
+  }
+
+  .status-indicator {
+    margin-left: auto;
+  }
+
+  .hamburger-btn {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
   }
 }
 
@@ -11262,8 +11305,8 @@ a.prediction-link:hover {
   .panels-grid {
     display: flex !important;
     flex-direction: column;
-    gap: 8px;
-    padding: 8px;
+    gap: 10px;
+    padding: 10px 8px;
   }
 
   body {
@@ -11272,25 +11315,61 @@ a.prediction-link:hover {
 
   .panel-title {
     font-size: 13px;
+    font-weight: 600;
   }
 
   .panel {
     width: 100% !important;
-    min-height: 250px;
-    max-height: min(70vh, 500px);
+    min-height: 200px;
+    max-height: min(65vh, 480px);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    cursor: default;
+  }
+
+  .panel:active {
+    cursor: default;
+  }
+
+  .panel .panel-header {
+    padding: 10px 12px;
+    min-height: 40px;
+    border-radius: 12px 12px 0 0;
   }
 
   .panel-content {
     font-size: 13px;
     -webkit-overflow-scrolling: touch;
+    padding: 8px 10px;
   }
 
-  /* Full-viewport map on mobile (Google Maps-like experience) */
+  /* Better touch targets for panel tabs on mobile */
+  .panel-tabs {
+    padding: 6px 8px 0;
+    gap: 0;
+  }
+
+  .panel-tab {
+    padding: 8px 12px;
+    font-size: 12px;
+    min-height: 36px;
+  }
+
+  /* Add Panel button - mobile card style */
+  .add-panel-block {
+    border-radius: 12px;
+    min-height: 56px;
+  }
+
+  /* Compact map on mobile — show map + panels without full scroll */
   .map-section {
-    height: calc(100vh - 48px) !important;
-    height: calc(100dvh - 48px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)) !important;
-    min-height: 60vh !important;
-    max-height: 100dvh !important;
+    height: 50vh !important;
+    height: 50dvh !important;
+    min-height: 260px !important;
+    max-height: 55dvh !important;
+    border-left: none;
+    border-right: none;
   }
 
   /* Collapsed map on mobile — higher specificity overrides .map-section above */
@@ -11314,18 +11393,22 @@ a.prediction-link:hover {
     align-items: center;
     gap: 4px;
     margin-left: auto;
-    padding: 4px 10px;
+    padding: 6px 12px;
     border: 1px solid var(--border);
-    border-radius: 4px;
+    border-radius: 8px;
     background: var(--bg-secondary);
     color: var(--text-secondary);
     font-size: 12px;
+    font-weight: 500;
     cursor: pointer;
     white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+    min-height: 32px;
   }
 
   .map-collapse-btn:active {
     background: var(--bg-tertiary, var(--border));
+    transform: scale(0.97);
   }
 
   /* Hide pin button and resize handles on mobile */
@@ -11372,13 +11455,45 @@ a.prediction-link:hover {
     width: 44px;
     height: 44px;
     font-size: 20px;
+    border-radius: 10px;
   }
 
   /* Time slider buttons */
   .time-btn {
     flex: 0 0 auto;
-    padding: 8px 12px;
+    padding: 8px 14px;
     min-height: 36px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  /* Map header area on mobile */
+  .map-section .panel-header {
+    padding: 6px 10px;
+    min-height: 36px;
+    gap: 6px;
+  }
+
+  .map-header-actions {
+    gap: 4px;
+  }
+
+  .map-dimension-toggle {
+    gap: 0;
+  }
+
+  .map-dim-btn {
+    padding: 5px 10px;
+    min-height: 30px;
+    font-size: 12px;
+    border-radius: 6px;
+  }
+
+  /* Map fullscreen button - larger touch target on mobile */
+  .map-section .map-pin-btn:not([style*="display: none"]) {
+    width: 32px;
+    height: 32px;
   }
 
   /* Map popup positioning for mobile - ensure it's visible */
@@ -11456,7 +11571,7 @@ a.prediction-link:hover {
   }
 }
 
-/* Extra small screens */
+/* Extra small screens (iPhone SE, small phones) */
 @media (max-width: 480px) {
   .layer-toggles {
     max-height: 80px;
@@ -11481,12 +11596,61 @@ a.prediction-link:hover {
   }
 
   .map-popup.map-popup-sheet {
-    left: 8px !important;
-    right: 8px !important;
+    left: 6px !important;
+    right: 6px !important;
   }
 
   .header {
-    padding: 8px;
+    padding: 6px 8px;
+  }
+
+  .logo-mobile {
+    font-size: 14px !important;
+  }
+
+  .panels-grid {
+    padding: 8px 6px !important;
+    gap: 8px !important;
+  }
+
+  .panel {
+    border-radius: 10px !important;
+    max-height: min(60vh, 420px) !important;
+  }
+
+  .panel .panel-header {
+    padding: 8px 10px !important;
+  }
+
+  .panel-content {
+    font-size: 12px !important;
+  }
+
+  .map-section {
+    min-height: 220px !important;
+    max-height: 50dvh !important;
+  }
+
+  .time-btn {
+    padding: 6px 10px !important;
+    font-size: 11px !important;
+  }
+
+  .site-footer nav {
+    gap: 6px 12px !important;
+  }
+
+  .site-footer nav a {
+    font-size: 11px !important;
+  }
+
+  /* Reduce search FAB size on very small screens */
+  .search-mobile-fab {
+    width: 48px !important;
+    height: 48px !important;
+    font-size: 18px !important;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px)) !important;
+    right: 12px !important;
   }
 }
 
@@ -14570,15 +14734,34 @@ a.prediction-link:hover {
 @media (max-width: 768px) {
   .pro-banner {
     font-size: 11px;
-    gap: 8px;
-    padding: 6px 32px 6px 10px;
-    flex-wrap: wrap;
+    gap: 6px;
+    padding: 5px 28px 5px 10px;
+    flex-wrap: nowrap;
+    min-height: 0;
   }
 
   .pro-banner-text {
-    white-space: normal;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     flex: 1 1 0;
     min-width: 0;
+    font-size: 10px;
+  }
+
+  .pro-banner-badge {
+    flex-shrink: 0;
+  }
+
+  .pro-cta {
+    flex-shrink: 0;
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+
+  .pro-banner-close {
+    right: 6px;
+    font-size: 14px;
   }
 }
 

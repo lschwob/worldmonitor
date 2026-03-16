@@ -2131,6 +2131,65 @@
 }
 
 /* DeductionPanel (PERF-012: extracted from inline <style>) */
+/* Mobile responsive overrides for panel grids */
+@media (max-width: 768px) {
+  .disp-stats-grid,
+  .giving-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sa-summary {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+  }
+
+  .wc-region-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ops-row {
+    grid-template-columns: 36px 1fr auto auto;
+    gap: 0 6px;
+    padding: 8px;
+  }
+
+  .flight-row {
+    grid-template-columns: 56px 1fr auto auto;
+    gap: 0 6px;
+    padding: 8px;
+  }
+
+  .price-row {
+    grid-template-columns: auto 1fr auto auto;
+    gap: 0 6px;
+  }
+
+  .giving-inst-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .disp-stats-grid,
+  .giving-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+  }
+
+  .disp-stat-value,
+  .giving-stat-value {
+    font-size: 14px;
+  }
+
+  .sa-summary {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .sa-summary-count {
+    font-size: 15px;
+  }
+}
+
 .deduction-panel-content { display: flex; flex-direction: column; gap: 12px; padding: 8px; height: 100%; overflow-y: auto; }
 .deduction-form { display: flex; flex-direction: column; gap: 8px; }
 .deduction-input,
