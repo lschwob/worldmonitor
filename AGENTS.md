@@ -196,3 +196,29 @@ Runs automatically before `git push`:
 - [Health endpoints](docs/health-endpoints.mdx)
 - [Adding endpoints guide](docs/adding-endpoints.mdx)
 - [API reference (OpenAPI)](docs/api/)
+
+## Cursor Cloud specific instructions
+
+### Services overview
+
+| Service | Command | Port | Notes |
+|---|---|---|---|
+| Vite dev server (SPA) | `npm run dev` | 3000 | Main dashboard; also proxies API routes in dev mode |
+
+No external services (Redis, databases) are required for local development. The app runs fully without API keys; features that require them are simply disabled.
+
+### Running checks
+
+Standard commands from `package.json`:
+- **Lint**: `npm run lint` (Biome)
+- **Typecheck**: `npm run typecheck` (src) and `npm run typecheck:api` (API layer)
+- **Unit tests**: `npm run test:data` (node:test runner via tsx, 1400+ tests)
+- **Sidecar tests**: `npm run test:sidecar` (node:test runner)
+- **E2E tests**: `npm run test:e2e` (requires `npx playwright install chromium` first)
+
+### Gotchas
+
+- The `postinstall` script runs `cd blog-site && npm ci --prefer-offline` to install Astro blog dependencies. If `npm install` fails at this step, the blog-site `package-lock.json` may be stale; running `cd blog-site && npm install` then retrying from root can help.
+- The pre-push hook (`.husky/pre-push`) runs typecheck, esbuild bundle check, edge function tests, markdown lint, and version sync check. Be aware these all run before `git push` succeeds.
+- One sidecar test (`strips browser origin headers when proxying to cloud fallback`) has a pre-existing failure unrelated to environment setup.
+- Variant dev servers: `npm run dev:tech`, `npm run dev:finance`, `npm run dev:commodity`, `npm run dev:happy`. The default `npm run dev` starts the `full` variant.
